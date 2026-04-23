@@ -35,6 +35,8 @@ namespace SdetPractice.Drivers
         {
             options.AddArgument("--headless=new");
             options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
         }
 
         private static IWebDriver CreateChromeDriver()
