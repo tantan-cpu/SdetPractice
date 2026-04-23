@@ -34,20 +34,7 @@ jobs:
           allure --version
 
       - name: Create appsettings.json
-        run: |
-          cat > SdetPractice/SdetPractice/appsettings.json << 'EOF'
-          {
-            "TestSettings": {
-              "BaseUrl": "https://the-internet.herokuapp.com",
-              "Browser": "Chrome",
-              "Headless": true,
-              "ExplicitWaitSeconds": 10,
-              "PageLoadTimeoutSeconds": 30,
-              "BasicAuthUsername": "admin",
-              "BasicAuthPassword": "admin"
-            }
-          }
-          EOF
+        run: echo '{"TestSettings":{"BaseUrl":"https://the-internet.herokuapp.com","Browser":"Chrome","Headless":true,"ExplicitWaitSeconds":10,"PageLoadTimeoutSeconds":30,"BasicAuthUsername":"admin","BasicAuthPassword":"admin"}}' > SdetPractice/SdetPractice/appsettings.json
 
       - name: Restore dependencies
         run: dotnet restore SdetPractice/SdetPractice.csproj
