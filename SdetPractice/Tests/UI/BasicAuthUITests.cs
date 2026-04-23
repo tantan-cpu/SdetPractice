@@ -30,7 +30,7 @@ namespace SdetPractice.Tests.UI
                 .Should().BeTrue("page should load after successful authentication");
 
             _page.GetSuccessMessage()
-                .Should().Contain("");
+                .Should().Contain("Congratulations! You must have the proper credentials.");
         }
     }
 }
