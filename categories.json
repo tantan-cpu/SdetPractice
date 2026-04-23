@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Product Defects",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Expected.*|.*Should.*|.*AssertionFailed.*"
+  },
+  {
+    "name": "Test Defects",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*"
+  },
+  {
+    "name": "UI Test Failures",
+    "matchedStatuses": ["failed", "broken"],
+    "traceRegex": ".*UITests.*"
+  },
+  {
+    "name": "API Test Failures",
+    "matchedStatuses": ["failed", "broken"],
+    "traceRegex": ".*ApiTests.*"
+  },
+  {
+    "name": "Ignored Tests",
+    "matchedStatuses": ["skipped"]
+  }
+]
