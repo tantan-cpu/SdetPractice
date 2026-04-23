@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>Test suite for the AB Testing page.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("AB Testing")]
     public class ABTestingUITests : BaseTest
     {
         private ABTestingPage _page = null!;

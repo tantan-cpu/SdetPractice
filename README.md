@@ -15,6 +15,7 @@ A C# Selenium test automation portfolio project built against [The Internet](htt
 | FluentAssertions | 7.2.2 |
 | Serilog | 4.3.1 |
 | ChromeDriver | 147.x |
+| Allure.NUnit | 2.14.0 |
 
 ---
 
@@ -24,12 +25,12 @@ A C# Selenium test automation portfolio project built against [The Internet](htt
 SdetPractice/
 ├── Base/
 │   ├── BasePage.cs          # Abstract base for all page objects
-│   ├── BaseTest.cs          # NUnit setup/teardown, driver lifecycle
+│   ├── BaseTest.cs          # NUnit setup/teardown, driver lifecycle, Allure integration
 │   └── IPage.cs             # Page contract interface
 ├── Configuration/
 │   └── TestSettings.cs      # Typed config bound from appsettings.json
 ├── Drivers/
-│   └── DriverFactory.cs     # WebDriver instantiation
+│   └── DriverFactory.cs     # WebDriver instantiation (Chrome, Firefox, Edge)
 ├── Pages/                   # Page Object Model classes
 │   ├── ABTestingPage.cs
 │   ├── AddOrRemoveElementsPage.cs
@@ -54,6 +55,9 @@ SdetPractice/
     ├── ScreenshotHelper.cs
     ├── TestLogger.cs
     └── WaitHelper.cs
+allureConfig.json            # Allure results output path configuration
+appsettings.json             # Runtime test configuration (excluded from source control)
+appsettings.example.json     # Configuration template
 ```
 
 ---
@@ -66,19 +70,25 @@ SdetPractice/
 - **Data-driven tests** — `[TestCaseSource]` with a dedicated `TestData` class as single source of truth
 - **UI vs API separation** — 401 unauthorized scenarios tested via `HttpClient` to avoid Chrome's native auth popup limitation
 - **Typed configuration** — `appsettings.json` bound to `TestSettings` for base URL, credentials, and timeouts
+- **Allure reporting** — `[AllureSuite]` and `[AllureFeature]` attributes on every fixture; `[AllureNUnit]` activated globally via `BaseTest`
 
 ---
 
 ## Configuration
 
-Create or update `appsettings.json` in the project root:
+Create `appsettings.json` in the project root (copy from `appsettings.example.json`):
 
 ```json
 {
-  "BaseUrl": "https://the-internet.herokuapp.com",
-  "ExplicitWaitSeconds": 10,
-  "BasicAuthUsername": "admin",
-  "BasicAuthPassword": "admin"
+  "TestSettings": {
+    "BaseUrl": "https://the-internet.herokuapp.com",
+    "Browser": "Chrome",
+    "Headless": true,
+    "ExplicitWaitSeconds": 10,
+    "PageLoadTimeoutSeconds": 30,
+    "BasicAuthUsername": "admin",
+    "BasicAuthPassword": "admin"
+  }
 }
 ```
 
@@ -107,14 +117,43 @@ dotnet test --filter "FullyQualifiedName~Tests.API"
 
 ---
 
+## Allure Reports
+
+Requires the [Allure CLI](https://allurereport.org/docs/install/) (install via `scoop install allure`).
+
+After running tests, generate and open the report:
+
+```bash
+allure generate allure-results --clean -o allure-report
+allure open allure-report
+```
+
+> Results are written to `allure-results/` at the solution root. The report groups tests by **Suite** (UI Tests / API Tests) and **Feature** (per page).
+
+---
+
+## CI/CD
+
+This project uses **GitHub Actions** for continuous integration. Every push or pull request to `main` automatically:
+
+1. Restores NuGet packages and builds the project
+2. Runs all tests (headless Chrome on `ubuntu-latest`)
+3. Generates an Allure report
+4. Uploads `allure-results` and `allure-report` as downloadable artifacts from the Actions run page
+
+Workflow file: `.github/workflows/ci.yml`
+
+---
+
 ## Test Coverage
 
-| Page | Test IDs | Type |
-|---|---|---|
-| AB Testing | TC001–TC003 | UI |
-| Add/Remove Elements | TC004–TC005 | UI |
-| Basic Auth | TC006 | UI |
-| Basic Auth | TC007–TC010 | API |
-| Broken Images | TC011–TC015 | UI |
-| Challenging DOM | TC016–TC028 | UI |
-| Checkboxes | TC029–TC034 | UI |
+| Page | Test IDs | Count | Type |
+|---|---|---|---|
+| AB Testing | TC001 | 1 | UI |
+| Add/Remove Elements | TC002–TC005 | 4 | UI |
+| Basic Auth | TC006 | 1 | UI |
+| Basic Auth | TC011–TC012 + data-driven | 3 | API |
+| Broken Images | TC016–TC020 | 5 | UI |
+| Challenging DOM | TC021–TC028 | 8 | UI |
+| Checkboxes | TC029–TC034 | 6 | UI |
+| **Total** | | **28** | |

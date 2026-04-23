@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>UI test suite for the Challenging DOM page. Demonstrates stable locator strategies on a dynamic page.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("Challenging DOM")]
     public class ChallengingDomUITests : BaseTest
     {
         private ChallengingDomPage _page = null!;

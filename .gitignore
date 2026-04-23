@@ -12,6 +12,11 @@ TestResults/
 logs/
 *.log
 screenshots/
+Screenshots/
+
+# Allure
+allure-results/
+allure-report/
 
 # Config with credentials
 appsettings.json

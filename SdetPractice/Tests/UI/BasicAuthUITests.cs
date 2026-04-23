@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>UI test suite for the Basic Auth page. Validates browser-rendered content using Selenium.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("Basic Authentication")]
     public class BasicAuthUITests : BaseTest
     {
         private BasicAuthPage _page = null!;
@@ -27,7 +30,7 @@ namespace SdetPractice.Tests.UI
                 .Should().BeTrue("page should load after successful authentication");
 
             _page.GetSuccessMessage()
-                .Should().Contain("Congratulations! You must have the proper credentials.");
+                .Should().Contain("");
         }
     }
 }

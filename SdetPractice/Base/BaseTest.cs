@@ -1,3 +1,4 @@
+using Allure.NUnit;
 using OpenQA.Selenium;
 using Serilog;
 using SdetPractice.Configuration;
@@ -7,6 +8,7 @@ using SdetPractice.Utilities;
 namespace SdetPractice.Base
 {
     /// <summary>Base class for all test fixtures. Manages driver lifecycle, logging, and failure screenshots.</summary>
+    [AllureNUnit]
     public abstract class BaseTest
     {
         /// <summary>The active WebDriver instance for the current test.</summary>

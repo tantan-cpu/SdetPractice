@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>UI test suite for the Broken Images page. Validates image load status via JavaScript naturalWidth.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("Broken Images")]
     public class BrokenImagesUITests : BaseTest
     {
         private BrokenImagesPage _page = null!;

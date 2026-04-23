@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>UI test suite for the Checkboxes page. Validates checkbox default states and interaction behavior.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("Checkboxes")]
     public class CheckboxesUITests : BaseTest
     {
         private CheckboxesPage _page = null!;

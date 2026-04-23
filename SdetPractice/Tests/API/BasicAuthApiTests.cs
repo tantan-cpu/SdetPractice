@@ -1,3 +1,5 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using System.Net;
 using FluentAssertions;
 using SdetPractice.Configuration;
@@ -8,6 +10,9 @@ namespace SdetPractice.Tests.API
 {
     /// <summary>API test suite for the Basic Auth endpoint. Validates HTTP status codes using HttpClient — no browser required.</summary>
     [TestFixture]
+    [AllureNUnit]
+    [AllureSuite("API Tests")]
+    [AllureFeature("Basic Authentication")]
     public class BasicAuthApiTests
     {
         [Test]

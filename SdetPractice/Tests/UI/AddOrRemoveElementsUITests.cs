@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Allure.NUnit.Attributes;
+using FluentAssertions;
 using SdetPractice.Base;
 using SdetPractice.Pages;
 
@@ -6,6 +7,8 @@ namespace SdetPractice.Tests.UI
 {
     /// <summary>Test suite for the Add/Remove Elements page.</summary>
     [TestFixture]
+    [AllureSuite("UI Tests")]
+    [AllureFeature("Add Remove Elements")]
     public class AddOrRemoveElementsUITests : BaseTest
     {
         private AddOrRemoveElementsPage _page = null!;
