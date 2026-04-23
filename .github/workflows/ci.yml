@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    schedule:
+    - cron: '0 16 * * *'   # 12 midnight PHT (UTC+8 = 16:00 UTC)
+    - cron: '0 22 * * *'   # 6AM PHT
+    - cron: '0 4 * * *'    # 12 noon PHT
+    - cron: '0 10 * * *'   # 6PM PHT
 
 permissions:
   contents: read
