@@ -1,12 +1,11 @@
 name: CI
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
-    schedule:
+  schedule:
     - cron: '0 16 * * *'   # 12 midnight PHT (UTC+8 = 16:00 UTC)
     - cron: '0 22 * * *'   # 6AM PHT
     - cron: '0 4 * * *'    # 12 noon PHT
@@ -20,18 +19,17 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v4
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v5.2.0
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
       - name: Set up Java (required by Allure CLI)
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -67,18 +65,18 @@ jobs:
 
       - name: Upload Allure results artifact
         if: always()
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: allure-results/
 
       - name: Setup Pages
         if: always()
-        uses: actions/configure-pages@v6.0.0
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         if: always()
-        uses: actions/upload-pages-artifact@v5.0.0
+        uses: actions/upload-pages-artifact@v3
         with:
           path: allure-report/
 
@@ -86,12 +84,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: always()
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5.0.0
+        uses: actions/deploy-pages@v4
